@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+
+    <!-- Tabla 1: wk_grid_records_test -->
+    <table name="wk_grid_records_test" resource="default" engine="innodb" comment="Test Table for Old Data">
+        <column xsi:type="int" name="entity_id" unsigned="true" nullable="false" identity="true" comment="Entity ID" />
+        <column xsi:type="varchar" name="old_entity_id" length="256" nullable="true" comment="Old Entity ID" />
+        <column xsi:type="varchar" name="title" length="255" nullable="false" comment="Title" />
+        <column xsi:type="text" name="content" nullable="true" comment="Content" />
+        <column xsi:type="datetime" name="publish_date" nullable="true" comment="Publish Date" />
+        <column xsi:type="smallint" name="is_active" unsigned="true" nullable="false" default="0" comment="Is Active" />
+        <column xsi:type="timestamp" name="created_at" nullable="false" default="CURRENT_TIMESTAMP" comment="Created At" />
+        <column xsi:type="timestamp" name="update_time" nullable="true" comment="Update Time" />
+
+        <!-- Primary Key -->
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="entity_id" />
+        </constraint>
+    </table>
+
+    <!-- Tabla 2: wk_grid_records -->
+    <table name="wk_grid_records" resource="default" engine="innodb" comment="Grid Records Table">
+        <column xsi:type="int" name="entity_id" unsigned="true" nullable="false" identity="true" comment="Entity ID" />
+        <column xsi:type="varchar" name="title" length="255" nullable="false" comment="Title" />
+        <column xsi:type="mediumtext" name="content" nullable="true" comment="Content" />
+        <column xsi:type="timestamp" name="publish_date" nullable="true" comment="Publish Date" />
+        <column xsi:type="smallint" name="is_active" unsigned="true" nullable="true" default="0" comment="Is Active" />
+        <column xsi:type="timestamp" name="created_at" nullable="false" default="CURRENT_TIMESTAMP" comment="Created At" />
+        <column xsi:type="timestamp" name="update_time" nullable="true" comment="Update Time" />
+
+        <!-- Primary Key -->
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="entity_id" />
+        </constraint>
+
+        <!-- Foreign Key (Relaciona con wk_grid_records_test) -->
+        <constraint xsi:type="foreign" referenceId="FK_WK_GRID_RECORDS_OLD_ENTITY_ID"
+                    table="wk_grid_records" column="entity_id"
+                    referenceTable="wk_grid_records_test" referenceColumn="old_entity_id"
+                    onDelete="CASCADE" />
+    </table>
+
+</schema>

@@ -1,0 +1,111 @@
+@startuml
+hide circle
+
+' Interfaz
+interface GridInterface {
+    + getId(): int
+    + getName(): string
+    + getStatus(): Status
+}
+
+' Bloques de Adminhtml
+package Block {
+    package Adminhtml {
+        package Grid {
+            class Edit_Form {
+                + _prepareForm(): void
+            }
+            class AddRow
+        }
+    }
+}
+
+' Controladores de Adminhtml
+package Controller {
+    package Adminhtml {
+        package Grid {
+            class AddRow {
+                + execute(): void
+            }
+            class Index {
+                + execute(): void
+            }
+            class MassDelete {
+                + execute(): void
+            }
+            class Save {
+                + execute(): void
+            }
+        }
+    }
+}
+
+' Modelos
+package Model {
+    class Grid {
+        - id: int
+        - name: string
+        - status: Status
+        + save(): void
+        + delete(): void
+    }
+
+    Grid ..|> GridInterface  : implements
+
+    package ResourceModel {
+        package Grid {
+            class Collection {
+                + addFieldToFilter(field: string, condition: string)
+                + loadEntities(): array
+            }
+            class Grid {
+                + load(id: int): Grid
+                + save(grid: Grid): void
+                + delete(grid: Grid): void
+            }
+        }
+    }
+
+    class Status
+}
+
+' Logger
+package Logger {
+    class Logger {
+        + log(message: string): void
+    }
+    class Handler {
+        + write(record: string): void
+    }
+}
+
+Logger -- Handler : uses
+
+' Setup
+package Setup {
+    class InstallSchema {
+        + install()
+    }
+}
+
+' UI Component
+package Ui {
+    package Component {
+        package Listing {
+            package Grid {
+                class Column_Action
+            }
+        }
+    }
+}
+
+' Relaciones
+Grid --> ResourceModel.Grid : uses
+Grid --> Status : has
+AddRow --> Grid : uses
+Index --> Grid : uses
+MassDelete --> Grid : uses
+Save --> Grid : uses
+Edit_Form --> Grid : uses
+
+@enduml

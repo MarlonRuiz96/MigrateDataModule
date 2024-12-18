@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<!--
+/** Grid menu xml
+ * @category  Webkul
+ * @package   Webkul_Grid
+ * @author    Webkul
+ * @copyright Copyright (c) 2010-2017 Webkul Software Private Limited (https://webkul.com)
+ * @license   https://store.webkul.com/license.html
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/menu_configuration.xsd">
+    <!-- Menú principal -->
+    <menu>
+        <!-- Menú principal: Catálogo Automatizado -->
+        <add id="Webkul_Grid::catalog_automatizado"
+             title="Catálogo Automatizado"
+             module="Webkul_Grid"
+             sortOrder="10"
+             resource="Webkul_Grid::catalog_automatizado" />
+
+        <!-- Submenú para la tabla principal -->
+        <add id="Webkul_Grid::main_manager"
+             title="Gestor Principal"
+             module="Webkul_Grid"
+             sortOrder="20"
+             parent="Webkul_Grid::catalog_automatizado"
+             action="grid/grid/index"
+             resource="Webkul_Grid::main_manager" />
+
+        <!-- Submenú para la tabla clon, gestionada por el historial -->
+        <add id="Webkul_Grid::add_row_history"
+             title="Historial de Migración"
+             module="Webkul_Grid"
+             sortOrder="30"
+             parent="Webkul_Grid::catalog_automatizado"
+             action="grid/gridclone/index"
+             resource="Webkul_Grid::add_row_history" />
+    </menu>
+</config>
